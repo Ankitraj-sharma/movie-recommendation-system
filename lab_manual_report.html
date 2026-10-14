@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <title>Practical 11 : Develop a Simple Recommendation System</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&family=Consolas&family=Arial:wght@400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;600;700;800;900&family=Consolas&family=Times+New+Roman&display=swap');
 
   @page {
     size: A4 portrait;
-    margin: 8mm 12mm 10mm 12mm;
+    margin: 8mm 14mm 10mm 14mm;
   }
 
   * {
@@ -18,9 +18,9 @@
   }
 
   body {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 10.5pt;
-    line-height: 1.3;
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    line-height: 1.35;
     color: #000;
     margin: 0;
     padding: 0;
@@ -38,7 +38,7 @@
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
-    padding-bottom: 8mm;
+    padding-bottom: 10mm;
   }
 
   .page:last-child {
@@ -46,14 +46,12 @@
     break-after: avoid;
   }
 
-  /* Header */
-  .header-container {
+  /* Exact University Header from Sample PDF */
+  .header-table {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 5px;
-    border-bottom: 2.5px solid #000;
-    margin-bottom: 10px;
+    padding-bottom: 4px;
   }
 
   .header-left {
@@ -62,99 +60,84 @@
     gap: 8px;
   }
 
-  .uni-logo-box {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-
-  .logo-icon {
-    width: 36px;
-    height: 36px;
-  }
-
   .uni-text-box {
     line-height: 1.1;
   }
 
-  .uni-title {
-    font-family: Arial, sans-serif;
-    font-weight: 700;
-    font-size: 13pt;
-    color: #0f172a;
-    letter-spacing: -0.3px;
+  .uni-title-1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    font-size: 15pt;
+    color: #111827;
+    letter-spacing: -0.5px;
+    margin: 0;
+    padding: 0;
   }
 
-  .uni-sub {
-    font-family: Arial, sans-serif;
+  .uni-title-2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    font-size: 13.5pt;
+    color: #111827;
+    letter-spacing: -0.4px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .uni-sub-group {
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 7pt;
-    color: #475569;
-    letter-spacing: 0.2px;
-  }
-
-  .naac-badge {
-    border: 1.5px solid #b91c1c;
-    border-radius: 4px;
-    padding: 2px 4px;
-    text-align: center;
-    background: #fef2f2;
-    line-height: 1;
-    margin-left: 2px;
-  }
-
-  .naac-label {
-    font-family: Arial, sans-serif;
-    font-size: 6pt;
-    font-weight: 700;
-    color: #b91c1c;
-    display: block;
-  }
-
-  .naac-grade {
-    font-family: Arial, sans-serif;
-    font-size: 10pt;
-    font-weight: 900;
-    color: #b91c1c;
-    display: block;
+    color: #4b5563;
+    letter-spacing: 0.1px;
+    margin-top: 1px;
   }
 
   .header-right {
     text-align: right;
-    font-family: Arial, sans-serif;
-    line-height: 1.2;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.25;
   }
 
-  .dept-title {
+  .faculty-title {
     font-size: 8.5pt;
     font-weight: 700;
     text-transform: uppercase;
     color: #000;
   }
 
-  .dept-sub {
-    font-size: 8pt;
-    color: #333;
+  .dept-title {
+    font-size: 8.5pt;
+    color: #111;
   }
 
-  .lab-manual-title {
-    font-size: 9pt;
+  .manual-title {
+    font-size: 9.5pt;
     font-weight: 700;
     color: #000;
     margin-top: 1px;
   }
 
+  /* Solid black divider line exactly as in sample */
+  .header-divider {
+    height: 3px;
+    background-color: #000;
+    width: 100%;
+    margin-top: 4px;
+    margin-bottom: 12px;
+  }
+
   /* Practical Title */
-  .practical-heading {
-    font-family: Arial, sans-serif;
+  .practical-title {
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     font-weight: 700;
     margin: 4px 0 10px 0;
     color: #000;
   }
 
-  /* Section Titles */
-  .section-heading {
-    font-family: Arial, sans-serif;
+  /* Section Headings like '#1. ...' in sample */
+  .section-title {
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
     font-weight: 700;
     margin: 8px 0 3px 0;
@@ -162,34 +145,43 @@
     color: #000;
   }
 
-  /* Code Block */
-  .code-block {
-    font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 7.6pt;
-    line-height: 1.2;
-    background: #f8fafc;
-    border: 1px solid #cbd5e1;
-    padding: 5px 8px;
-    margin: 3px 0 6px 0;
-    white-space: pre-wrap;
-    word-break: break-all;
-    border-radius: 3px;
+  .sub-title {
+    font-family: Arial, sans-serif;
+    font-size: 9pt;
+    font-weight: 700;
+    margin: 5px 0 2px 0;
+    color: #000;
   }
 
-  /* Output Block */
+  /* Code Block exactly matching student manual format */
+  .code-text {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 8pt;
+    line-height: 1.25;
+    background: #fbfbfb;
+    border: 1px solid #d1d5db;
+    padding: 6px 10px;
+    margin: 3px 0 7px 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+    border-radius: 2px;
+  }
+
+  /* Output Section */
   .op-label {
     font-family: Arial, sans-serif;
     font-weight: 700;
-    font-size: 9pt;
-    margin: 6px 0 2px 0;
+    font-size: 9.5pt;
+    margin: 7px 0 2px 0;
+    text-align: left;
   }
 
-  .op-block {
+  .op-content {
     font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 7.5pt;
-    line-height: 1.18;
+    font-size: 7.6pt;
+    line-height: 1.2;
     background: #ffffff;
-    border: 1px dashed #64748b;
+    border: 1px dashed #4b5563;
     padding: 5px 8px;
     margin: 2px 0 3px 0;
     white-space: pre-wrap;
@@ -198,12 +190,12 @@
   .caption {
     text-align: center;
     font-family: Arial, sans-serif;
-    font-size: 8pt;
+    font-size: 8.5pt;
     font-weight: 600;
-    margin: 2px 0 7px 0;
+    margin: 3px 0 8px 0;
   }
 
-  /* Tables */
+  /* Table */
   table.data-table {
     width: 100%;
     border-collapse: collapse;
@@ -213,35 +205,34 @@
   }
 
   table.data-table th, table.data-table td {
-    border: 1px solid #475569;
+    border: 1px solid #374151;
     padding: 3px 5px;
     text-align: left;
   }
 
   table.data-table th {
-    background-color: #f1f5f9;
+    background-color: #f3f4f6;
     font-weight: 700;
   }
 
-  /* Info Grid */
-  .info-box {
-    border: 1px solid #94a3b8;
-    background: #f8fafc;
+  /* Description Box */
+  .desc-box {
+    border: 1px solid #9ca3af;
+    background: #f9fafb;
     padding: 6px 10px;
     margin: 4px 0 8px 0;
-    border-radius: 4px;
-    font-family: Arial, sans-serif;
     font-size: 8.5pt;
+    line-height: 1.35;
   }
 
-  .info-grid {
+  .desc-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4px;
   }
 
-  /* Footer */
-  .footer-container {
+  /* Footer matching exact sample: Enrollment No on left, page number on right */
+  .footer-row {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -250,30 +241,20 @@
     justify-content: space-between;
     align-items: center;
     font-family: Arial, sans-serif;
-    font-size: 8.5pt;
-    font-weight: 600;
-    padding-top: 3px;
-    border-top: 1px solid #cbd5e1;
+    font-size: 9pt;
+    font-weight: 700;
+    padding-top: 4px;
+    border-top: 1px solid #e5e7eb;
   }
 
   ul, ol {
     margin: 2px 0 4px 16px;
     padding: 0;
+    font-size: 8.5pt;
   }
 
   li {
     margin-bottom: 1.5px;
-  }
-
-  .badge-tag {
-    display: inline-block;
-    background: #e2e8f0;
-    border: 1px solid #cbd5e1;
-    padding: 0.5px 5px;
-    border-radius: 3px;
-    font-family: 'Consolas', monospace;
-    font-size: 7.5pt;
-    font-weight: 600;
   }
 </style>
 </head>
@@ -282,72 +263,74 @@
   <!-- ==================== PAGE 1 ==================== -->
   <div class="page">
     <div>
-      <!-- Header -->
-      <div class="header-container">
+      <!-- Exact University Header -->
+      <div class="header-table">
         <div class="header-left">
-          <div class="uni-logo-box">
-            <svg class="logo-icon" viewBox="0 0 100 100">
-              <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="#0284c7" />
-              <polygon points="50,15 80,30 80,70 50,85 20,70 20,30" fill="#0369a1" />
-              <path d="M30 65 L30 35 L50 52 L70 35 L70 65 L60 65 L60 48 L50 58 L40 48 L40 65 Z" fill="#ffffff" />
-            </svg>
-            <div class="uni-text-box">
-              <div class="uni-title">Marwadi<br>University</div>
-              <div class="uni-sub">Marwadi Chandarana Group</div>
-            </div>
+          <!-- Marwadi University Logo SVG (Exact representation) -->
+          <svg width="42" height="42" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="muGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00a3e0"/>
+                <stop offset="100%" stop-color="#0077b6"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" rx="18" fill="url(#muGrad)"/>
+            <path d="M22 75 V28 L40 50 L50 38 L60 50 L78 28 V75 H66 V46 L50 64 L34 46 V75 Z" fill="#ffffff"/>
+          </svg>
+          <div class="uni-text-box">
+            <div class="uni-title-1">Marwadi</div>
+            <div class="uni-title-2">University</div>
+            <div class="uni-sub-group">Marwadi Chandarana Group</div>
           </div>
-          <div class="naac-badge">
-            <span class="naac-label">NAAC</span>
-            <span class="naac-grade">A+</span>
-          </div>
+          <!-- NAAC A+ Badge SVG -->
+          <svg width="42" height="46" viewBox="0 0 80 90">
+            <path d="M10 10 H70 V55 C70 72 40 85 40 85 C40 85 10 72 10 55 Z" fill="#b91c1c" stroke="#f59e0b" stroke-width="2.5"/>
+            <text x="40" y="27" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">NAAC</text>
+            <text x="40" y="58" font-family="Arial, sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle">A+</text>
+          </svg>
         </div>
         <div class="header-right">
-          <div class="dept-title">FACULTY OF ENGINEERING AND TECHNOLOGY</div>
-          <div class="dept-sub">Department of Computer Engineering</div>
-          <div class="lab-manual-title">AI Lab Manual</div>
+          <div class="faculty-title">FACULTY OF ENGINEERING AND TECHNOLOGY</div>
+          <div class="dept-title">Department of Computer Engineering</div>
+          <div class="manual-title">AI Lab Manual</div>
         </div>
       </div>
+      <div class="header-divider"></div>
 
-      <!-- Title -->
-      <div class="practical-heading">
+      <!-- Practical Title -->
+      <div class="practical-title">
         Practical 11 : Develop a Simple Recommendation System
       </div>
 
-      <!-- Front Description / Project Overview -->
-      <div class="section-heading"># 1. PROJECT OVERVIEW & APPLICATION DOMAIN</div>
-      <div class="info-box">
-        <div class="info-grid">
+      <!-- Section 1: Overview & Details -->
+      <div class="section-title"># 1. PROJECT OVERVIEW & APPLICATION DOMAIN</div>
+      <div class="desc-box">
+        <div class="desc-grid">
           <div><strong>• Student Name:</strong> Ankit raj sharma</div>
           <div><strong>• Enrollment No.:</strong> 92400103142</div>
           <div><strong>• Practical Title:</strong> Concept demonstrated in Practical 11</div>
           <div><strong>• Task:</strong> Self-Learning Task 3</div>
           <div><strong>• Selected Domain:</strong> Movie Recommendation System</div>
           <div><strong>• Core Technology:</strong> Python 3, Pandas DataFrame</div>
-          <div><strong>• GitHub Repository:</strong> github.com/Ankitraj-sharma/movie-recommendation-system</div>
-          <div><strong>• Live Web App:</strong> ankitraj-sharma.github.io/movie-recommendation-system/</div>
+          <div style="grid-column: span 2;"><strong>• Project Purpose:</strong> Process structured tabular movie data using Pandas DataFrame to recommend Top 3 and Top 5 items based on rating, user genre preference, and popularity metrics.</div>
         </div>
       </div>
 
-      <p style="margin: 2px 0 6px 0; font-size: 9pt;">
-        <strong>Objective:</strong> Develop a simple recommendation system using Python and Pandas that recommends the <strong>Top 3 or Top 5 items</strong> based on suitable criteria such as rating, score, popularity, and user preferences.
-      </p>
-
-      <!-- Tech Stack -->
-      <div class="section-heading"># 2. TECHNOLOGY STACK & ARCHITECTURE</div>
+      <!-- Section 2: Tech Stack -->
+      <div class="section-title"># 2. TECHNOLOGY STACK & ARCHITECTURE</div>
       <p style="margin: 2px 0 4px 0; font-size: 8.5pt;">
-        The system is designed following a modular data pipeline architecture:
+        The system is developed using Python data processing libraries following a modular structure:
       </p>
-      <ul style="font-size: 8.5pt;">
-        <li><strong>Programming Language:</strong> Python 3.10+ (Core logic, mathematical functions, pipeline automation).</li>
-        <li><strong>Data Processing Library:</strong> Pandas (<span class="badge-tag">pandas.DataFrame</span>) for multi-attribute storage, conditional filtering, and composite sorting.</li>
-        <li><strong>Dataset Source:</strong> <span class="badge-tag">movies_dataset.csv</span> containing 15 items and 6 attributes.</li>
-        <li><strong>Interactive & Web Deployment:</strong> HTML5, TailwindCSS, JavaScript, and GitHub Pages for live cloud execution.</li>
+      <ul>
+        <li><strong>Language:</strong> Python 3.10+ (Core sorting, filtering, and scoring algorithms).</li>
+        <li><strong>Data Manipulation:</strong> Pandas (<code>pandas.DataFrame</code>) for dataset representation, boolean conditional indexing, and multi-attribute sorting.</li>
+        <li><strong>Dataset Storage:</strong> <code>movies_dataset.csv</code> containing 15 items and 6 attributes.</li>
       </ul>
 
-      <!-- Dataset Description -->
-      <div class="section-heading"># 3. DATASET DESCRIPTION & ATTRIBUTES</div>
+      <!-- Section 3: Dataset Description -->
+      <div class="section-title"># 3. DATASET DESCRIPTION & ATTRIBUTES</div>
       <p style="margin: 2px 0 4px 0; font-size: 8.5pt;">
-        The dataset contains <strong>15 items</strong> (satisfying the &ge; 10 requirement) with <strong>6 key attributes</strong> (satisfying the 2–4 attributes requirement):
+        The dataset contains <strong>15 movie records</strong> (satisfying the &ge; 10 requirement) with <strong>6 key attributes</strong> (satisfying the 2–4 attributes requirement):
       </p>
       
       <table class="data-table">
@@ -370,7 +353,7 @@
           <tr><td>6</td><td>Avengers: Endgame</td><td>Action</td><td>8.4</td><td>1,180,000</td><td>2019</td></tr>
           <tr><td>7</td><td>The Shawshank Redemption</td><td>Drama</td><td>9.3</td><td>2,750,000</td><td>1994</td></tr>
           <tr><td>8</td><td>Whiplash</td><td>Drama</td><td>8.5</td><td>900,000</td><td>2014</td></tr>
-          <tr><td>9</td><td>Spider-Man: Into the Spider-Verse</td><td>Animation</td><td>8.4</td><td>590,000</td><td>2018</td></tr>
+          <tr><td>9</td><td>Spider-Man: Spider-Verse</td><td>Animation</td><td>8.4</td><td>590,000</td><td>2018</td></tr>
           <tr><td>10</td><td>The Matrix</td><td>Sci-Fi</td><td>8.7</td><td>1,950,000</td><td>1999</td></tr>
           <tr><td>11</td><td>Gladiator</td><td>Action</td><td>8.5</td><td>1,530,000</td><td>2000</td></tr>
           <tr><td>12</td><td>Coco</td><td>Animation</td><td>8.4</td><td>530,000</td><td>2017</td></tr>
@@ -383,9 +366,9 @@
     </div>
 
     <!-- Footer -->
-    <div class="footer-container">
+    <div class="footer-row">
       <div>92400103142</div>
-      <div>| 1</div>
+      <div>| 39</div>
     </div>
   </div>
 
@@ -393,40 +376,46 @@
   <!-- ==================== PAGE 2 ==================== -->
   <div class="page">
     <div>
-      <!-- Header -->
-      <div class="header-container">
+      <!-- Exact University Header -->
+      <div class="header-table">
         <div class="header-left">
-          <div class="uni-logo-box">
-            <svg class="logo-icon" viewBox="0 0 100 100">
-              <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="#0284c7" />
-              <polygon points="50,15 80,30 80,70 50,85 20,70 20,30" fill="#0369a1" />
-              <path d="M30 65 L30 35 L50 52 L70 35 L70 65 L60 65 L60 48 L50 58 L40 48 L40 65 Z" fill="#ffffff" />
-            </svg>
-            <div class="uni-text-box">
-              <div class="uni-title">Marwadi<br>University</div>
-              <div class="uni-sub">Marwadi Chandarana Group</div>
-            </div>
+          <svg width="42" height="42" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="muGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00a3e0"/>
+                <stop offset="100%" stop-color="#0077b6"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" rx="18" fill="url(#muGrad2)"/>
+            <path d="M22 75 V28 L40 50 L50 38 L60 50 L78 28 V75 H66 V46 L50 64 L34 46 V75 Z" fill="#ffffff"/>
+          </svg>
+          <div class="uni-text-box">
+            <div class="uni-title-1">Marwadi</div>
+            <div class="uni-title-2">University</div>
+            <div class="uni-sub-group">Marwadi Chandarana Group</div>
           </div>
-          <div class="naac-badge">
-            <span class="naac-label">NAAC</span>
-            <span class="naac-grade">A+</span>
-          </div>
+          <svg width="42" height="46" viewBox="0 0 80 90">
+            <path d="M10 10 H70 V55 C70 72 40 85 40 85 C40 85 10 72 10 55 Z" fill="#b91c1c" stroke="#f59e0b" stroke-width="2.5"/>
+            <text x="40" y="27" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">NAAC</text>
+            <text x="40" y="58" font-family="Arial, sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle">A+</text>
+          </svg>
         </div>
         <div class="header-right">
-          <div class="dept-title">FACULTY OF ENGINEERING AND TECHNOLOGY</div>
-          <div class="dept-sub">Department of Computer Engineering</div>
-          <div class="lab-manual-title">AI Lab Manual</div>
+          <div class="faculty-title">FACULTY OF ENGINEERING AND TECHNOLOGY</div>
+          <div class="dept-title">Department of Computer Engineering</div>
+          <div class="manual-title">AI Lab Manual</div>
         </div>
       </div>
+      <div class="header-divider"></div>
 
-      <!-- Recommendation Logic Explanation -->
-      <div class="section-heading"># 4. RECOMMENDATION LOGIC & CRITERIA</div>
+      <!-- Recommendation Logic -->
+      <div class="section-title"># 4. RECOMMENDATION LOGIC & CRITERIA</div>
       <p style="margin: 2px 0 4px 0; font-size: 8.5pt;">
-        Three distinct recommendation strategies were implemented in Pandas:
+        Three robust recommendation strategies were implemented in Pandas:
       </p>
-      <ol style="font-size: 8.5pt; margin-top: 0;">
-        <li><strong>Criterion 1 (Global Highest Rating):</strong> Orders all records descending by <span class="badge-tag">Rating</span>, utilizing <span class="badge-tag">Votes</span> as a secondary sort key to break ties fairly.</li>
-        <li><strong>Criterion 2 (User Preference / Genre Filtering):</strong> Applies boolean indexing (<span class="badge-tag">df['Genre'] == user_genre</span>) to filter items matching user preference, then sorts candidate matches by rating.</li>
+      <ol>
+        <li><strong>Criterion 1 (Global Highest Rating):</strong> Evaluates universal quality by ordering records descending by <code>Rating</code>, utilizing <code>Votes</code> as secondary tie-breaker.</li>
+        <li><strong>Criterion 2 (User Preference / Genre Filtering):</strong> Uses boolean masking (<code>df['Genre'] == user_genre</code>) to filter candidate items matching user preference, then ranks matches by rating.</li>
         <li><strong>Criterion 3 (IMDb Weighted Rating Score):</strong> Accounts for vote volume using the formula:<br>
           <center style="margin: 3px 0; font-family: 'Consolas', monospace; font-size: 8pt;">
             Weighted Score = [v / (v + m)] &times; R + [m / (v + m)] &times; C
@@ -435,14 +424,14 @@
         </li>
       </ol>
 
-      <!-- Code Step 1 & 2 -->
-      <div class="section-heading"># 5. PYTHON CODE IMPLEMENTATION</div>
+      <!-- Code Step 1, 2, 3 -->
+      <div class="section-title"># 5. PYTHON CODE IMPLEMENTATION</div>
       
-      <p style="margin: 2px 0 1px 0; font-size: 8.5pt; font-weight: 600;">Step 1: Import Libraries and Load Dataset</p>
-      <div class="code-block">import os
+      <div class="sub-title">Step 1: Import Libraries and Load Dataset</div>
+      <div class="code-text">import os
 import pandas as pd
 
-# Load dataset from CSV into a Pandas DataFrame with dictionary fallback
+# Load dataset from CSV into a Pandas DataFrame with fallback dictionary
 def load_movie_dataset(csv_path="movies_dataset.csv"):
     if os.path.exists(csv_path):
         df = pd.read_csv(csv_path)
@@ -465,16 +454,16 @@ def load_movie_dataset(csv_path="movies_dataset.csv"):
         df = pd.DataFrame(data)
     return df</div>
 
-      <p style="margin: 3px 0 1px 0; font-size: 8.5pt; font-weight: 600;">Step 2: Criterion 1 — Highest Rating Recommendation Function</p>
-      <div class="code-block">def recommend_top_by_rating(df, top_n=5):
+      <div class="sub-title">Step 2: Criterion 1 — Highest Rating Recommendation Function</div>
+      <div class="code-text">def recommend_top_by_rating(df, top_n=5):
     """Sorts DataFrame by Rating descending, Votes as tie-breaker."""
     recommended = df.sort_values(by=["Rating", "Votes"], ascending=[False, False]).head(top_n)
     display_df = recommended[["Title", "Genre", "Rating", "Votes", "Release_Year"]].reset_index(drop=True)
     display_df.index = display_df.index + 1
     return display_df</div>
 
-      <p style="margin: 3px 0 1px 0; font-size: 8.5pt; font-weight: 600;">Step 3: Criterion 2 — Genre Preference Recommendation Function</p>
-      <div class="code-block">def recommend_by_genre(df, user_genre="Sci-Fi", top_n=3):
+      <div class="sub-title">Step 3: Criterion 2 — Genre Preference Recommendation Function</div>
+      <div class="code-text">def recommend_by_genre(df, user_genre="Sci-Fi", top_n=3):
     """Filters by user preferred Genre and ranks by Rating."""
     filtered = df[df["Genre"].str.lower() == user_genre.strip().lower()]
     if filtered.empty:
@@ -487,9 +476,9 @@ def load_movie_dataset(csv_path="movies_dataset.csv"):
     </div>
 
     <!-- Footer -->
-    <div class="footer-container">
+    <div class="footer-row">
       <div>92400103142</div>
-      <div>| 2</div>
+      <div>| 40</div>
     </div>
   </div>
 
@@ -497,34 +486,40 @@ def load_movie_dataset(csv_path="movies_dataset.csv"):
   <!-- ==================== PAGE 3 ==================== -->
   <div class="page">
     <div>
-      <!-- Header -->
-      <div class="header-container">
+      <!-- Exact University Header -->
+      <div class="header-table">
         <div class="header-left">
-          <div class="uni-logo-box">
-            <svg class="logo-icon" viewBox="0 0 100 100">
-              <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="#0284c7" />
-              <polygon points="50,15 80,30 80,70 50,85 20,70 20,30" fill="#0369a1" />
-              <path d="M30 65 L30 35 L50 52 L70 35 L70 65 L60 65 L60 48 L50 58 L40 48 L40 65 Z" fill="#ffffff" />
-            </svg>
-            <div class="uni-text-box">
-              <div class="uni-title">Marwadi<br>University</div>
-              <div class="uni-sub">Marwadi Chandarana Group</div>
-            </div>
+          <svg width="42" height="42" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="muGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00a3e0"/>
+                <stop offset="100%" stop-color="#0077b6"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" rx="18" fill="url(#muGrad3)"/>
+            <path d="M22 75 V28 L40 50 L50 38 L60 50 L78 28 V75 H66 V46 L50 64 L34 46 V75 Z" fill="#ffffff"/>
+          </svg>
+          <div class="uni-text-box">
+            <div class="uni-title-1">Marwadi</div>
+            <div class="uni-title-2">University</div>
+            <div class="uni-sub-group">Marwadi Chandarana Group</div>
           </div>
-          <div class="naac-badge">
-            <span class="naac-label">NAAC</span>
-            <span class="naac-grade">A+</span>
-          </div>
+          <svg width="42" height="46" viewBox="0 0 80 90">
+            <path d="M10 10 H70 V55 C70 72 40 85 40 85 C40 85 10 72 10 55 Z" fill="#b91c1c" stroke="#f59e0b" stroke-width="2.5"/>
+            <text x="40" y="27" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">NAAC</text>
+            <text x="40" y="58" font-family="Arial, sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle">A+</text>
+          </svg>
         </div>
         <div class="header-right">
-          <div class="dept-title">FACULTY OF ENGINEERING AND TECHNOLOGY</div>
-          <div class="dept-sub">Department of Computer Engineering</div>
-          <div class="lab-manual-title">AI Lab Manual</div>
+          <div class="faculty-title">FACULTY OF ENGINEERING AND TECHNOLOGY</div>
+          <div class="dept-title">Department of Computer Engineering</div>
+          <div class="manual-title">AI Lab Manual</div>
         </div>
       </div>
+      <div class="header-divider"></div>
 
-      <p style="margin: 2px 0 1px 0; font-size: 8.5pt; font-weight: 600;">Step 4: Criterion 3 — IMDb Weighted Rating Score Function</p>
-      <div class="code-block">def recommend_by_weighted_score(df, top_n=5):
+      <div class="sub-title">Step 4: Criterion 3 — IMDb Weighted Rating Score Function</div>
+      <div class="code-text">def recommend_by_weighted_score(df, top_n=5):
     """Calculates Bayesian weighted score balancing rating & popularity."""
     C = df["Rating"].mean()
     m = df["Votes"].quantile(0.25)
@@ -538,8 +533,8 @@ def load_movie_dataset(csv_path="movies_dataset.csv"):
     display_df.index = display_df.index + 1
     return display_df</div>
 
-      <p style="margin: 3px 0 1px 0; font-size: 8.5pt; font-weight: 600;">Step 5: Main Driver Program</p>
-      <div class="code-block">def main():
+      <div class="sub-title">Step 5: Main Driver Program</div>
+      <div class="code-text">def main():
     print("=" * 65)
     print("    PANDAS MOVIE RECOMMENDATION SYSTEM - PRACTICAL 11")
     print("=" * 65)
@@ -562,11 +557,11 @@ def load_movie_dataset(csv_path="movies_dataset.csv"):
 if __name__ == "__main__":
     main()</div>
 
-      <!-- Section 6: Output 1 -->
-      <div class="section-heading"># 6. PROGRAM EXECUTION OUTPUT (O/P)</div>
+      <!-- Section 6: Outputs -->
+      <div class="section-title"># 6. PROGRAM EXECUTION OUTPUT (O/P)</div>
       
       <div class="op-label">O/P</div>
-      <div class="op-block">=================================================================
+      <div class="op-content">=================================================================
     PANDAS MOVIE RECOMMENDATION SYSTEM - PRACTICAL 11
 =================================================================
 [INFO] Loaded dataset successfully from 'movies_dataset.csv'
@@ -584,9 +579,9 @@ Total Movies: 15 | Columns: ['Movie_ID', 'Title', 'Genre', 'Rating', 'Votes', 'R
     </div>
 
     <!-- Footer -->
-    <div class="footer-container">
+    <div class="footer-row">
       <div>92400103142</div>
-      <div>| 3</div>
+      <div>| 41</div>
     </div>
   </div>
 
@@ -594,34 +589,40 @@ Total Movies: 15 | Columns: ['Movie_ID', 'Title', 'Genre', 'Rating', 'Votes', 'R
   <!-- ==================== PAGE 4 ==================== -->
   <div class="page">
     <div>
-      <!-- Header -->
-      <div class="header-container">
+      <!-- Exact University Header -->
+      <div class="header-table">
         <div class="header-left">
-          <div class="uni-logo-box">
-            <svg class="logo-icon" viewBox="0 0 100 100">
-              <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="#0284c7" />
-              <polygon points="50,15 80,30 80,70 50,85 20,70 20,30" fill="#0369a1" />
-              <path d="M30 65 L30 35 L50 52 L70 35 L70 65 L60 65 L60 48 L50 58 L40 48 L40 65 Z" fill="#ffffff" />
-            </svg>
-            <div class="uni-text-box">
-              <div class="uni-title">Marwadi<br>University</div>
-              <div class="uni-sub">Marwadi Chandarana Group</div>
-            </div>
+          <svg width="42" height="42" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="muGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00a3e0"/>
+                <stop offset="100%" stop-color="#0077b6"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" rx="18" fill="url(#muGrad4)"/>
+            <path d="M22 75 V28 L40 50 L50 38 L60 50 L78 28 V75 H66 V46 L50 64 L34 46 V75 Z" fill="#ffffff"/>
+          </svg>
+          <div class="uni-text-box">
+            <div class="uni-title-1">Marwadi</div>
+            <div class="uni-title-2">University</div>
+            <div class="uni-sub-group">Marwadi Chandarana Group</div>
           </div>
-          <div class="naac-badge">
-            <span class="naac-label">NAAC</span>
-            <span class="naac-grade">A+</span>
-          </div>
+          <svg width="42" height="46" viewBox="0 0 80 90">
+            <path d="M10 10 H70 V55 C70 72 40 85 40 85 C40 85 10 72 10 55 Z" fill="#b91c1c" stroke="#f59e0b" stroke-width="2.5"/>
+            <text x="40" y="27" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">NAAC</text>
+            <text x="40" y="58" font-family="Arial, sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle">A+</text>
+          </svg>
         </div>
         <div class="header-right">
-          <div class="dept-title">FACULTY OF ENGINEERING AND TECHNOLOGY</div>
-          <div class="dept-sub">Department of Computer Engineering</div>
-          <div class="lab-manual-title">AI Lab Manual</div>
+          <div class="faculty-title">FACULTY OF ENGINEERING AND TECHNOLOGY</div>
+          <div class="dept-title">Department of Computer Engineering</div>
+          <div class="manual-title">AI Lab Manual</div>
         </div>
       </div>
+      <div class="header-divider"></div>
 
       <div class="op-label">O/P (Continued)</div>
-      <div class="op-block">[CRITERION 2] TOP 3 RECOMMENDATIONS FOR 'SCI-FI':
+      <div class="op-content">[CRITERION 2] TOP 3 RECOMMENDATIONS FOR 'SCI-FI':
           Title   Genre  Rating    Votes  Release_Year
 1     Inception  Sci-Fi     8.8  2400000          2010
 2    The Matrix  Sci-Fi     8.7  1950000          1999
@@ -635,7 +636,7 @@ Total Movies: 15 | Columns: ['Movie_ID', 'Title', 'Genre', 'Rating', 'Votes', 'R
       <div class="caption">2. Genre-Based Filtered Recommendations Output (Sci-Fi & Animation)</div>
 
       <div class="op-label">O/P</div>
-      <div class="op-block">[CRITERION 3] TOP 5 RECOMMENDATIONS BY WEIGHTED SCORE:
+      <div class="op-content">[CRITERION 3] TOP 5 RECOMMENDATIONS BY WEIGHTED SCORE:
                       Title   Genre  Rating    Votes  Weighted_Score
 1  The Shawshank Redemption   Drama     9.3  2750000            9.16
 2           The Dark Knight  Action     9.0  2700000            8.92
@@ -645,37 +646,27 @@ Total Movies: 15 | Columns: ['Movie_ID', 'Title', 'Genre', 'Rating', 'Votes', 'R
 =================================================================</div>
       <div class="caption">3. Weighted Popularity & Rating Score Output</div>
 
-      <!-- Live Deployment & Verification -->
-      <div class="section-heading"># 7. LIVE DEPLOYMENT & GITHUB REPOSITORY VERIFICATION</div>
-      <div class="info-box">
-        <div style="font-size: 8.5pt;">
-          <p style="margin: 0 0 2px 0;"><strong>• Live Web URL:</strong> <a href="https://ankitraj-sharma.github.io/movie-recommendation-system/" style="color: #0369a1; text-decoration: underline;">https://ankitraj-sharma.github.io/movie-recommendation-system/</a></p>
-          <p style="margin: 0 0 2px 0;"><strong>• GitHub Repository:</strong> <a href="https://github.com/Ankitraj-sharma/movie-recommendation-system" style="color: #0369a1; text-decoration: underline;">https://github.com/Ankitraj-sharma/movie-recommendation-system</a></p>
-          <p style="margin: 0;"><strong>• Deployment Platform:</strong> GitHub Pages (Automated static build with HTTP 200 verification).</p>
-        </div>
-      </div>
-
-      <!-- Conclusion & Learning Outcome -->
-      <div class="section-heading"># 8. CONCLUSION & LEARNING OUTCOME</div>
+      <!-- Section 7: Conclusion & Learning Outcome -->
+      <div class="section-title"># 7. CONCLUSION & LEARNING OUTCOME</div>
       <p style="margin: 2px 0 3px 0; font-size: 8.5pt;">
-        <strong>Conclusion:</strong> A comprehensive, lightweight recommendation system was successfully designed, developed, and deployed. The system accurately processes multi-attribute data in Pandas DataFrames, performs composite sorting, handles ties gracefully, and offers user-centric filtering and mathematical scoring to produce Top 3 and Top 5 recommendations.
+        <strong>Conclusion:</strong> A comprehensive, lightweight recommendation system was successfully designed and developed. The system accurately processes multi-attribute data in Pandas DataFrames, performs composite sorting, handles ties gracefully, and offers user-centric filtering and mathematical scoring to produce Top 3 and Top 5 recommendations.
       </p>
       <p style="margin: 2px 0 0 0; font-size: 8.5pt;">
         <strong>Learning Outcomes Achieved:</strong>
       </p>
-      <ul style="font-size: 8pt;">
+      <ul>
         <li>Understood how structured tabular datasets are ingested, explored, and manipulated in Pandas.</li>
         <li>Implemented conditional subset filtering, multi-column sorting, and percentile calculations.</li>
         <li>Learned practical recommendation mechanisms used in commercial platforms (e.g., Netflix, IMDb).</li>
-        <li>Successfully deployed the machine learning / data science concept to the public web via GitHub Pages.</li>
+        <li>Processed structured data using Python and Pandas to generate recommendations for real-world applications.</li>
       </ul>
 
     </div>
 
     <!-- Footer -->
-    <div class="footer-container">
+    <div class="footer-row">
       <div>92400103142</div>
-      <div>| 4</div>
+      <div>| 42</div>
     </div>
   </div>
 
