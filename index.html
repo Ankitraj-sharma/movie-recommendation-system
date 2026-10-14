@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Recommendation System | Live Demo</title>
+  <!-- Google Fonts & Tailwind CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              500: '#22c55e',
+              600: '#16a34a',
+            },
+            brand: {
+              dark: '#0f172a',
+              card: '#1e293b',
+              accent: '#6366f1',
+              gold: '#f59e0b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at top, #1e1b4b 0%, #0f172a 50%, #030712 100%);
+      min-height: 100vh;
+      color: #f8fafc;
+    }
+    .glass {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-active {
+      border: 1px solid rgba(99, 102, 241, 0.5);
+      background: rgba(99, 102, 241, 0.15);
+    }
+    .glow-gold {
+      box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.3);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Navigation -->
+  <header class="border-b border-slate-800/80 sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-amber-500 flex items-center justify-center font-black text-xl shadow-lg shadow-indigo-500/20">
+          🎬
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight tracking-tight text-white flex items-center gap-2">
+            Movie Recommender
+            <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full font-medium">Practical 11</span>
+          </h1>
+          <p class="text-xs text-slate-400">Self-Learning Task 3 • Python & Pandas</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="openModal('reportModal')" class="text-xs font-semibold px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+          📄 View Report
+        </button>
+        <a href="https://github.com/Ankitraj-sharma/movie-recommendation-system" target="_blank" class="text-xs font-semibold px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub Repo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Hero / Assignment Intro -->
+    <div class="mb-8 p-6 rounded-2xl glass relative overflow-hidden border border-indigo-500/20">
+      <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Live College Project Demonstration
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          Smart Movie Recommendation System
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base mt-2 leading-relaxed">
+          Demonstrating core concepts from <strong>Practical 11</strong>. This system processes a structured dataset of <strong>15 movies</strong> with <strong>6 attributes</strong> using Python and Pandas DataFrame logic, allowing real-time recommendation filtering by rating, user genre preference, and weighted popularity score.
+        </p>
+      </div>
+    </div>
+
+    <!-- Interactive Control Panel -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+      
+      <!-- Controls Sidebar -->
+      <div class="lg:col-span-1 space-y-5">
+        <div class="p-5 rounded-2xl glass">
+          <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider mb-4 flex items-center gap-2">
+            ⚙️ Recommendation Setup
+          </h3>
+
+          <!-- Criterion Selector -->
+          <div class="mb-4">
+            <label class="block text-xs font-medium text-slate-400 mb-2">1. Recommendation Criterion</label>
+            <div class="space-y-2">
+              <button onclick="setCriterion('rating')" id="btn-rating" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between glass-active text-white">
+                <span>⭐ Highest Rating (Global)</span>
+                <span class="text-[10px] bg-indigo-500/30 text-indigo-200 px-1.5 py-0.5 rounded">Criterion 1</span>
+              </button>
+              <button onclick="setCriterion('genre')" id="btn-genre" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between glass text-slate-300 hover:text-white hover:bg-slate-800">
+                <span>🎭 User Genre Preference</span>
+                <span class="text-[10px] bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded">Criterion 2</span>
+              </button>
+              <button onclick="setCriterion('weighted')" id="btn-weighted" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between glass text-slate-300 hover:text-white hover:bg-slate-800">
+                <span>⚖️ Weighted Score (IMDb)</span>
+                <span class="text-[10px] bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded">Criterion 3</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Genre Filter (Visible when genre criterion is active) -->
+          <div id="genreSelectContainer" class="mb-4 hidden">
+            <label class="block text-xs font-medium text-slate-400 mb-2">2. Preferred Genre</label>
+            <select id="genreDropdown" onchange="applyRecommendations()" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
+              <option value="Sci-Fi">Sci-Fi (Science Fiction)</option>
+              <option value="Action">Action</option>
+              <option value="Drama">Drama</option>
+              <option value="Animation">Animation</option>
+              <option value="Romance">Romance</option>
+            </select>
+          </div>
+
+          <!-- Top N Items Selector -->
+          <div class="mb-4">
+            <label class="block text-xs font-medium text-slate-400 mb-2">3. Recommendation Count</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="setTopN(3)" id="btn-top3" class="px-3 py-2 text-xs font-bold rounded-xl glass text-slate-300 hover:text-white">
+                Top 3 Items
+              </button>
+              <button onclick="setTopN(5)" id="btn-top5" class="px-3 py-2 text-xs font-bold rounded-xl glass-active text-white">
+                Top 5 Items
+              </button>
+            </div>
+          </div>
+
+          <!-- Reset / Info Button -->
+          <div class="pt-2 border-t border-slate-700/60 flex items-center justify-between">
+            <span class="text-[11px] text-slate-400">Total in Database: 15 Movies</span>
+            <button onclick="resetFilters()" class="text-[11px] text-indigo-400 hover:text-indigo-300 underline font-medium">Reset</button>
+          </div>
+        </div>
+
+        <!-- Submission Info Box -->
+        <div class="p-4 rounded-2xl glass border border-slate-800 text-xs space-y-2">
+          <div class="font-bold text-slate-200">🎓 Academic Submission Details</div>
+          <div class="text-slate-400 leading-relaxed">
+            Meets every requirement of <strong>Self-Learning Task 3</strong>:
+            <ul class="list-disc list-inside mt-1 space-y-0.5 text-slate-300">
+              <li>&ge; 10 items (15 included)</li>
+              <li>2–4 attributes (6 included)</li>
+              <li>Sorted & Filtered via Pandas</li>
+              <li>Top 3 / Top 5 outputs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Results Display -->
+      <div class="lg:col-span-3 space-y-6">
+        
+        <!-- Active Filter Badge Banner -->
+        <div class="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl glass">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold uppercase text-slate-400">Active Criteria:</span>
+            <span id="activeCriterionBadge" class="text-xs px-2.5 py-1 rounded-full font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              ⭐ Highest Rating (Global)
+            </span>
+            <span id="activeCountBadge" class="text-xs px-2.5 py-1 rounded-full font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              Top 5 Recommendations
+            </span>
+          </div>
+          <div class="text-xs text-slate-400" id="resultStatusText">Showing 5 ranked movies</div>
+        </div>
+
+        <!-- Dynamic Recommendation Cards Container -->
+        <div id="recommendationsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- Formula Callout (When Weighted Score is chosen) -->
+        <div id="formulaCallout" class="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/20 text-xs hidden">
+          <div class="font-bold text-indigo-300 mb-1 flex items-center gap-2">
+            📐 IMDb Weighted Rating Algorithm:
+          </div>
+          <p class="text-slate-300 font-mono text-[11px]">
+            Weighted Score = [v / (v + m)] * R + [m / (v + m)] * C
+          </p>
+          <p class="text-slate-400 text-[11px] mt-1">
+            Where <strong>v</strong> = votes, <strong>m</strong> = min vote threshold (695K), <strong>R</strong> = rating, <strong>C</strong> = dataset mean rating (8.61).
+          </p>
+        </div>
+
+        <!-- Complete Dataset Explorer Section -->
+        <div class="p-5 rounded-2xl glass">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <h3 class="font-bold text-slate-200 text-sm">🗂️ Complete Dataset Explorer (15 Movies)</h3>
+              <p class="text-xs text-slate-400">Stored in <code>movies_dataset.csv</code> and processed using Pandas DataFrame</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="text" id="searchInput" oninput="filterTable()" placeholder="Search title or genre..." class="bg-slate-900 border border-slate-700 text-xs text-white rounded-lg px-3 py-1.5 focus:ring-1 focus:ring-indigo-500 outline-none">
+            </div>
+          </div>
+          
+          <div class="overflow-x-auto rounded-xl border border-slate-800">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-900/90 text-slate-400 uppercase font-semibold text-[11px]">
+                <tr>
+                  <th class="py-3 px-3">ID</th>
+                  <th class="py-3 px-3">Title</th>
+                  <th class="py-3 px-3">Genre</th>
+                  <th class="py-3 px-3">Rating</th>
+                  <th class="py-3 px-3">Votes</th>
+                  <th class="py-3 px-3">Year</th>
+                </tr>
+              </thead>
+              <tbody id="datasetTableBody" class="divide-y divide-slate-800">
+                <!-- Populated by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Report Modal -->
+  <div id="reportModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl">
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <h3 class="font-bold text-white text-base">Self-Learning Task 3: Official Project Report</h3>
+          <p class="text-xs text-slate-400">Structured report prepared for Practical 11 submission</p>
+        </div>
+        <button onclick="closeModal('reportModal')" class="text-slate-400 hover:text-white text-xl p-1">&times;</button>
+      </div>
+      <div class="p-6 overflow-y-auto text-xs text-slate-300 space-y-4 leading-relaxed font-sans">
+        
+        <div>
+          <h4 class="font-bold text-indigo-300 uppercase tracking-wider text-[11px]">1. Problem Selected</h4>
+          <p class="mt-1">
+            Selected Domain: <strong>Movie Recommendation System</strong>.<br>
+            Streaming services like Netflix or Prime Video feature thousands of choices. This recommendation system uses Python and Pandas to analyze ratings, vote popularity, and user genre preferences to present the Top 3 or Top 5 recommendations.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-indigo-300 uppercase tracking-wider text-[11px]">2. Dataset Description</h4>
+          <p class="mt-1">
+            A structured dataset (<code>movies_dataset.csv</code>) containing <strong>15 items</strong> and <strong>6 attributes</strong>:
+          </p>
+          <ul class="list-disc list-inside mt-1 space-y-1 text-slate-300">
+            <li><code>Movie_ID</code>: Unique integer index (1 to 15)</li>
+            <li><code>Title</code>: Name of the film</li>
+            <li><code>Genre</code>: Primary category (Sci-Fi, Action, Drama, Animation, Romance)</li>
+            <li><code>Rating</code>: Average score (1.0 to 10.0 scale)</li>
+            <li><code>Votes</code>: Total number of user reviews (popularity metric)</li>
+            <li><code>Release_Year</code>: The year of theatrical release</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-indigo-300 uppercase tracking-wider text-[11px]">3. Recommendation Logic</h4>
+          <p class="mt-1">
+            <strong>Criterion 1 (Highest Rating):</strong> Sorts DataFrame by <code>Rating</code> (descending) with <code>Votes</code> as secondary tie-breaker.<br>
+            <strong>Criterion 2 (Genre Filtering):</strong> Filters rows by user's chosen genre using boolean indexing, then selects top-rated items.<br>
+            <strong>Criterion 3 (Weighted Score):</strong> Uses the IMDb formula <code>(v/(v+m))*R + (m/(v+m))*C</code> to eliminate low-vote bias.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-indigo-300 uppercase tracking-wider text-[11px]">4. Sample Output Summary</h4>
+          <p class="mt-1">
+            <strong>Top 5 Global:</strong> 1. The Shawshank Redemption (9.3), 2. The Dark Knight (9.0), 3. Inception (8.8), 4. Forrest Gump (8.8), 5. The Matrix (8.7).<br>
+            <strong>Top 3 Sci-Fi:</strong> 1. Inception (8.8), 2. The Matrix (8.7), 3. Interstellar (8.7).<br>
+            <strong>Top 3 Animation:</strong> 1. Spirited Away (8.6), 2. Spider-Man: Spider-Verse (8.4), 3. Coco (8.4).
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-indigo-300 uppercase tracking-wider text-[11px]">5. Conclusion & Learning Outcome</h4>
+          <p class="mt-1">
+            Demonstrated mastery of Pandas DataFrame loading, filtering, conditional slicing, and multi-column sorting. The student successfully translated real-world recommendation algorithms into working Python code.
+          </p>
+        </div>
+
+      </div>
+      <div class="p-4 border-t border-slate-800 flex justify-end gap-2">
+        <a href="Project_Report.html" target="_blank" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition">
+          🖨️ Open Full Printable Report
+        </a>
+        <button onclick="closeModal('reportModal')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Application Logic -->
+  <script>
+    // Complete 15 Movies Dataset
+    const movies = [
+      { id: 1, title: "Inception", genre: "Sci-Fi", rating: 8.8, votes: 2400000, year: 2010 },
+      { id: 2, title: "The Dark Knight", genre: "Action", rating: 9.0, votes: 2700000, year: 2008 },
+      { id: 3, title: "Interstellar", genre: "Sci-Fi", rating: 8.7, votes: 1900000, year: 2014 },
+      { id: 4, title: "Parasite", genre: "Drama", rating: 8.5, votes: 850000, year: 2019 },
+      { id: 5, title: "Spirited Away", genre: "Animation", rating: 8.6, votes: 790000, year: 2001 },
+      { id: 6, title: "Avengers: Endgame", genre: "Action", rating: 8.4, votes: 1180000, year: 2019 },
+      { id: 7, title: "The Shawshank Redemption", genre: "Drama", rating: 9.3, votes: 2750000, year: 1994 },
+      { id: 8, title: "Whiplash", genre: "Drama", rating: 8.5, votes: 900000, year: 2014 },
+      { id: 9, title: "Spider-Man: Into the Spider-Verse", genre: "Animation", rating: 8.4, votes: 590000, year: 2018 },
+      { id: 10, title: "The Matrix", genre: "Sci-Fi", rating: 8.7, votes: 1950000, year: 1999 },
+      { id: 11, title: "Gladiator", genre: "Action", rating: 8.5, votes: 1530000, year: 2000 },
+      { id: 12, title: "Coco", genre: "Animation", rating: 8.4, votes: 530000, year: 2017 },
+      { id: 13, title: "Forrest Gump", genre: "Drama", rating: 8.8, votes: 2100000, year: 1994 },
+      { id: 14, title: "Dune: Part Two", genre: "Sci-Fi", rating: 8.6, votes: 420000, year: 2024 },
+      { id: 15, title: "La La Land", genre: "Romance", rating: 8.0, votes: 600000, year: 2016 }
+    ];
+
+    // State Variables
+    let currentCriterion = 'rating';
+    let currentTopN = 5;
+
+    // Weighted Score Formula Constants (same as Python script)
+    const C = movies.reduce((acc, m) => acc + m.rating, 0) / movies.length; // 8.61
+    const m = 695000; // 25th percentile of votes
+
+    movies.forEach(movie => {
+      movie.weightedScore = (
+        (movie.votes / (movie.votes + m)) * movie.rating +
+        (m / (movie.votes + m)) * C
+      ).toFixed(2);
+    });
+
+    function setCriterion(criterion) {
+      currentCriterion = criterion;
+      
+      // Update UI button highlights
+      ['rating', 'genre', 'weighted'].forEach(type => {
+        const btn = document.getElementById(`btn-${type}`);
+        if (type === criterion) {
+          btn.className = "w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between glass-active text-white";
+        } else {
+          btn.className = "w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold transition flex items-center justify-between glass text-slate-300 hover:text-white hover:bg-slate-800";
+        }
+      });
+
+      const genreBox = document.getElementById('genreSelectContainer');
+      const formulaBox = document.getElementById('formulaCallout');
+
+      if (criterion === 'genre') {
+        genreBox.classList.remove('hidden');
+        formulaBox.classList.add('hidden');
+      } else if (criterion === 'weighted') {
+        genreBox.classList.add('hidden');
+        formulaBox.classList.remove('hidden');
+      } else {
+        genreBox.classList.add('hidden');
+        formulaBox.classList.add('hidden');
+      }
+
+      applyRecommendations();
+    }
+
+    function setTopN(n) {
+      currentTopN = n;
+      document.getElementById('btn-top3').className = n === 3 
+        ? "px-3 py-2 text-xs font-bold rounded-xl glass-active text-white" 
+        : "px-3 py-2 text-xs font-bold rounded-xl glass text-slate-300 hover:text-white";
+      document.getElementById('btn-top5').className = n === 5 
+        ? "px-3 py-2 text-xs font-bold rounded-xl glass-active text-white" 
+        : "px-3 py-2 text-xs font-bold rounded-xl glass text-slate-300 hover:text-white";
+      
+      applyRecommendations();
+    }
+
+    function resetFilters() {
+      setCriterion('rating');
+      setTopN(5);
+      document.getElementById('searchInput').value = "";
+      filterTable();
+    }
+
+    function formatNumber(num) {
+      if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+      if (num >= 1000) return (num / 1000).toFixed(0) + 'K';
+      return num;
+    }
+
+    function applyRecommendations() {
+      let filtered = [...movies];
+      const badge = document.getElementById('activeCriterionBadge');
+      const countBadge = document.getElementById('activeCountBadge');
+
+      countBadge.innerText = `Top ${currentTopN} Recommendations`;
+
+      if (currentCriterion === 'rating') {
+        badge.innerText = "⭐ Highest Rating (Global)";
+        filtered.sort((a, b) => b.rating - a.rating || b.votes - a.votes);
+      } else if (currentCriterion === 'genre') {
+        const selectedGenre = document.getElementById('genreDropdown').value;
+        badge.innerText = `🎭 Genre: ${selectedGenre}`;
+        filtered = filtered.filter(m => m.genre.toLowerCase() === selectedGenre.toLowerCase());
+        filtered.sort((a, b) => b.rating - a.rating || b.votes - a.votes);
+      } else if (currentCriterion === 'weighted') {
+        badge.innerText = "⚖️ Weighted Rating (IMDb Formula)";
+        filtered.sort((a, b) => b.weightedScore - a.weightedScore);
+      }
+
+      const results = filtered.slice(0, currentTopN);
+      document.getElementById('resultStatusText').innerText = `Showing ${results.length} ranked movie${results.length === 1 ? '' : 's'}`;
+
+      const grid = document.getElementById('recommendationsGrid');
+      grid.innerHTML = "";
+
+      results.forEach((movie, idx) => {
+        const rank = idx + 1;
+        const rankColor = rank === 1 ? "bg-amber-500 text-slate-950 font-black shadow-lg shadow-amber-500/20" : 
+                          rank === 2 ? "bg-slate-300 text-slate-900 font-bold" : 
+                          rank === 3 ? "bg-amber-700 text-white font-bold" : 
+                          "bg-slate-800 text-slate-300 font-medium";
+
+        const card = document.createElement('div');
+        card.className = "p-5 rounded-2xl glass hover:border-indigo-500/40 transition group relative overflow-hidden";
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-lg flex items-center justify-center text-xs ${rankColor}">#${rank}</span>
+              <div>
+                <h4 class="font-bold text-white text-base group-hover:text-indigo-300 transition leading-snug">${movie.title}</h4>
+                <div class="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
+                  <span class="px-2 py-0.5 rounded-md bg-slate-800/80 border border-slate-700/60 font-medium">${movie.genre}</span>
+                  <span>•</span>
+                  <span>${movie.year}</span>
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 font-bold text-xs">
+                ⭐ ${movie.rating}
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <div>
+              <span class="text-[11px]">Total Votes:</span>
+              <span class="font-mono text-slate-200 font-semibold ml-1">${formatNumber(movie.votes)}</span>
+            </div>
+            ${currentCriterion === 'weighted' ? `
+              <div>
+                <span class="text-[11px]">IMDb Score:</span>
+                <span class="font-mono text-emerald-400 font-bold ml-1">${movie.weightedScore}</span>
+              </div>
+            ` : `
+              <div class="text-emerald-400 font-medium text-[11px] flex items-center gap-1">
+                <span>✓ High Match</span>
+              </div>
+            `}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderDatasetTable(data) {
+      const tbody = document.getElementById('datasetTableBody');
+      tbody.innerHTML = "";
+      data.forEach(m => {
+        const row = document.createElement('tr');
+        row.className = "hover:bg-slate-800/40 transition";
+        row.innerHTML = `
+          <td class="py-2.5 px-3 font-mono text-slate-400">${m.id}</td>
+          <td class="py-2.5 px-3 font-semibold text-white">${m.title}</td>
+          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 border border-slate-700">${m.genre}</span></td>
+          <td class="py-2.5 px-3 font-bold text-amber-400">⭐ ${m.rating}</td>
+          <td class="py-2.5 px-3 font-mono text-slate-300">${m.votes.toLocaleString()}</td>
+          <td class="py-2.5 px-3 text-slate-400">${m.year}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function filterTable() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = movies.filter(m => 
+        m.title.toLowerCase().includes(query) || 
+        m.genre.toLowerCase().includes(query)
+      );
+      renderDatasetTable(filtered);
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    // Initialize on page load
+    applyRecommendations();
+    renderDatasetTable(movies);
+  </script>
+</body>
+</html>

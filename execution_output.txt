@@ -1,0 +1,73 @@
+﻿
+======================================================================
+      WELCOME TO THE PANDAS-BASED MOVIE RECOMMENDATION SYSTEM
+======================================================================
+[INFO] Successfully loaded dataset from 'movies_dataset.csv'
+
+======================================================================
+                     MOVIE DATASET OVERVIEW
+======================================================================
+Total Movies in Dataset: 15
+Columns / Attributes (6): ['Movie_ID', 'Title', 'Genre', 'Rating', 'Votes', 'Release_Year']
+
+--- First 5 Records ---
+ Movie_ID           Title     Genre  Rating   Votes  Release_Year
+        1       Inception    Sci-Fi     8.8 2400000          2010
+        2 The Dark Knight    Action     9.0 2700000          2008
+        3    Interstellar    Sci-Fi     8.7 1900000          2014
+        4        Parasite     Drama     8.5  850000          2019
+        5   Spirited Away Animation     8.6  790000          2001
+
+--- Summary Statistics (Rating & Votes) ---
+       Rating       Votes
+count   15.00       15.00
+mean     8.61  1412666.67
+std      0.30   826174.20
+min      8.00   420000.00
+25%      8.45   695000.00
+50%      8.60  1180000.00
+75%      8.75  2025000.00
+max      9.30  2750000.00
+======================================================================
+
+======================================================================
+       TOP 5 MOVIE RECOMMENDATIONS (CRITERION: HIGHEST RATING)
+======================================================================
+                      Title   Genre  Rating    Votes  Release_Year
+1  The Shawshank Redemption   Drama     9.3  2750000          1994
+2           The Dark Knight  Action     9.0  2700000          2008
+3                 Inception  Sci-Fi     8.8  2400000          2010
+4              Forrest Gump   Drama     8.8  2100000          1994
+5                The Matrix  Sci-Fi     8.7  1950000          1999
+======================================================================
+
+======================================================================
+   TOP 3 RECOMMENDATIONS FOR PREFERRED GENRE: 'SCI-FI'
+======================================================================
+          Title   Genre  Rating    Votes  Release_Year
+1     Inception  Sci-Fi     8.8  2400000          2010
+2    The Matrix  Sci-Fi     8.7  1950000          1999
+3  Interstellar  Sci-Fi     8.7  1900000          2014
+======================================================================
+
+======================================================================
+   TOP 3 RECOMMENDATIONS FOR PREFERRED GENRE: 'ANIMATION'
+======================================================================
+                               Title      Genre  Rating   Votes  Release_Year
+1                      Spirited Away  Animation     8.6  790000          2001
+2  Spider-Man: Into the Spider-Verse  Animation     8.4  590000          2018
+3                               Coco  Animation     8.4  530000          2017
+======================================================================
+
+======================================================================
+     TOP 5 RECOMMENDATIONS (CRITERION: WEIGHTED POPULARITY & RATING)
+======================================================================
+                      Title   Genre  Rating    Votes  Weighted_Score
+1  The Shawshank Redemption   Drama     9.3  2750000            9.16
+2           The Dark Knight  Action     9.0  2700000            8.92
+3                 Inception  Sci-Fi     8.8  2400000            8.76
+4              Forrest Gump   Drama     8.8  2100000            8.75
+5              Interstellar  Sci-Fi     8.7  1900000            8.68
+======================================================================
+
+[SUCCESS] Recommendation System executed successfully!

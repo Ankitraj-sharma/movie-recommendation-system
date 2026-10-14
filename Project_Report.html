@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Learning Task 3: Movie Recommendation System Report</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background-color: #fcfcfc;
+    }
+    .header-card {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .header-card h1 { margin: 0 0 10px 0; font-size: 26px; }
+    .header-card h2 { margin: 0 0 15px 0; font-size: 18px; font-weight: normal; opacity: 0.9; }
+    .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+        margin-top: 15px;
+        font-size: 14px;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        padding-top: 15px;
+    }
+    h2.section-title {
+        color: #1e3c72;
+        border-bottom: 2px solid #e0e7ff;
+        padding-bottom: 8px;
+        margin-top: 35px;
+    }
+    h3 { color: #2a5298; margin-top: 20px; }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #eef2f6;
+    }
+    th {
+        background-color: #2a5298;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+    }
+    tr:nth-child(even) { background-color: #f8fafc; }
+    tr:hover { background-color: #f1f5f9; }
+    code {
+        background-color: #e2e8f0;
+        color: #0f172a;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: Consolas, monospace;
+        font-size: 13px;
+    }
+    pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 16px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-family: Consolas, monospace;
+        font-size: 13px;
+    }
+    .math-box {
+        background: #f0fdf4;
+        border-left: 4px solid #22c55e;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 0 8px 8px 0;
+    }
+    .screenshot-container {
+        text-align: center;
+        margin: 30px 0;
+    }
+    .screenshot-img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        border: 1px solid #cbd5e1;
+    }
+    .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        background: #e0f2fe;
+        color: #0369a1;
+    }
+    @media print {
+        body { margin: 0; padding: 10px; background: white; }
+        .header-card { box-shadow: none; }
+        table { box-shadow: none; }
+    }
+</style>
+</head>
+<body>
+
+<div class="header-card">
+    <h1>Self-Learning Task 3: Develop a Simple Recommendation System</h1>
+    <h2>Project Report & Execution Walkthrough</h2>
+    <div class="meta-grid">
+        <div><strong>Selected Domain:</strong> Movie Recommendation System</div>
+        <div><strong>Technology:</strong> Python 3 & Pandas</div>
+        <div><strong>Practical:</strong> Concept from Practical 11</div>
+        <div><strong>Status:</strong> Completed & Verified</div>
+    </div>
+</div>
+
+<h2 class="section-title">1. Problem Selected</h2>
+<p>
+    In today's digital media platforms, users are presented with thousands of content choices. Finding quality content aligned with personal preferences can be overwhelming.
+    A <strong>Recommendation System</strong> tackles this information overload by analyzing item attributes and user ratings to recommend the most suitable items.
+</p>
+<p>
+    <strong>Project Goal:</strong> Build a Python program using <code>pandas.DataFrame</code> that processes a dataset of at least 10 items, applies recommendation logic (such as highest rating, genre preference, and weighted popularity), and outputs the <strong>Top 3 or Top 5 recommendations</strong>.
+</p>
+
+<h2 class="section-title">2. Dataset Description</h2>
+<p>
+    The dataset was curated and saved as <code>movies_dataset.csv</code>. It contains <strong>15 items</strong> across diverse genres and includes <strong>6 key attributes</strong>:
+</p>
+<ul>
+    <li><code>Movie_ID</code>: Unique integer ID</li>
+    <li><code>Title</code>: Movie name</li>
+    <li><code>Genre</code>: Categorical domain (Sci-Fi, Action, Drama, Animation, Romance)</li>
+    <li><code>Rating</code>: Average user rating on a 1.0 to 10.0 scale</li>
+    <li><code>Votes</code>: Total number of user ratings (popularity proxy)</li>
+    <li><code>Release_Year</code>: Release year</li>
+</ul>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Votes</th>
+            <th>Year</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>1</td><td>Inception</td><td>Sci-Fi</td><td>8.8</td><td>2,400,000</td><td>2010</td></tr>
+        <tr><td>2</td><td>The Dark Knight</td><td>Action</td><td>9.0</td><td>2,700,000</td><td>2008</td></tr>
+        <tr><td>3</td><td>Interstellar</td><td>Sci-Fi</td><td>8.7</td><td>1,900,000</td><td>2014</td></tr>
+        <tr><td>4</td><td>Parasite</td><td>Drama</td><td>8.5</td><td>850,000</td><td>2019</td></tr>
+        <tr><td>5</td><td>Spirited Away</td><td>Animation</td><td>8.6</td><td>790,000</td><td>2001</td></tr>
+        <tr><td>6</td><td>Avengers: Endgame</td><td>Action</td><td>8.4</td><td>1,180,000</td><td>2019</td></tr>
+        <tr><td>7</td><td>The Shawshank Redemption</td><td>Drama</td><td>9.3</td><td>2,750,000</td><td>1994</td></tr>
+        <tr><td>8</td><td>Whiplash</td><td>Drama</td><td>8.5</td><td>900,000</td><td>2014</td></tr>
+        <tr><td>9</td><td>Spider-Man: Into the Spider-Verse</td><td>Animation</td><td>8.4</td><td>590,000</td><td>2018</td></tr>
+        <tr><td>10</td><td>The Matrix</td><td>Sci-Fi</td><td>8.7</td><td>1,950,000</td><td>1999</td></tr>
+        <tr><td>11</td><td>Gladiator</td><td>Action</td><td>8.5</td><td>1,530,000</td><td>2000</td></tr>
+        <tr><td>12</td><td>Coco</td><td>Animation</td><td>8.4</td><td>530,000</td><td>2017</td></tr>
+        <tr><td>13</td><td>Forrest Gump</td><td>Drama</td><td>8.8</td><td>2,100,000</td><td>1994</td></tr>
+        <tr><td>14</td><td>Dune: Part Two</td><td>Sci-Fi</td><td>8.6</td><td>420,000</td><td>2024</td></tr>
+        <tr><td>15</td><td>La La Land</td><td>Romance</td><td>8.0</td><td>600,000</td><td>2016</td></tr>
+    </tbody>
+</table>
+
+<h2 class="section-title">3. Recommendation Logic</h2>
+<p>Three practical recommendation criteria were designed and implemented:</p>
+
+<h3>Criterion 1: Highest Rating (Global Top 5)</h3>
+<p>
+    Sorts all items by <code>Rating</code> in descending order. Uses <code>Votes</code> as a secondary tie-breaker so that widely watched movies rank above lesser-known movies with the same rating.
+</p>
+<pre><code>recommended = df.sort_values(by=["Rating", "Votes"], ascending=[False, False]).head(5)</code></pre>
+
+<h3>Criterion 2: Genre Preference Filtering (Top 3 Recommendations)</h3>
+<p>
+    Filters the dataset according to the user's preferred genre (e.g., <em>Sci-Fi</em>, <em>Animation</em>, or <em>Action</em>), then ranks candidate items by rating.
+</p>
+<pre><code>filtered_df = df[df["Genre"].str.lower() == user_genre.strip().lower()]
+top_by_genre = filtered_df.sort_values(by=["Rating", "Votes"], ascending=[False, False]).head(3)</code></pre>
+
+<h3>Criterion 3: Weighted Rating Score (Popularity + Rating Balance)</h3>
+<div class="math-box">
+    <strong>Formula (IMDb Weighted Formula):</strong><br>
+    <code>Weighted Score = (v / (v + m)) * R + (m / (v + m)) * C</code><br>
+    <em>Where:</em><br>
+    • <strong>v</strong> = Number of votes for the movie<br>
+    • <strong>m</strong> = Minimum vote threshold (25th percentile = 695,000)<br>
+    • <strong>R</strong> = Individual movie rating<br>
+    • <strong>C</strong> = Mean rating across all movies in the dataset (8.61)
+</div>
+
+<h2 class="section-title">4. Sample Output</h2>
+
+<h3>A. Top 5 Movies by Highest Rating</h3>
+<table>
+    <thead><tr><th>Rank</th><th>Title</th><th>Genre</th><th>Rating</th><th>Votes</th><th>Year</th></tr></thead>
+    <tbody>
+        <tr><td>1</td><td><strong>The Shawshank Redemption</strong></td><td>Drama</td><td>9.3</td><td>2,750,000</td><td>1994</td></tr>
+        <tr><td>2</td><td><strong>The Dark Knight</strong></td><td>Action</td><td>9.0</td><td>2,700,000</td><td>2008</td></tr>
+        <tr><td>3</td><td><strong>Inception</strong></td><td>Sci-Fi</td><td>8.8</td><td>2,400,000</td><td>2010</td></tr>
+        <tr><td>4</td><td><strong>Forrest Gump</strong></td><td>Drama</td><td>8.8</td><td>2,100,000</td><td>1994</td></tr>
+        <tr><td>5</td><td><strong>The Matrix</strong></td><td>Sci-Fi</td><td>8.7</td><td>1,950,000</td><td>1999</td></tr>
+    </tbody>
+</table>
+
+<h3>B. Top 3 Recommendations for Sci-Fi</h3>
+<table>
+    <thead><tr><th>Rank</th><th>Title</th><th>Genre</th><th>Rating</th><th>Votes</th><th>Year</th></tr></thead>
+    <tbody>
+        <tr><td>1</td><td>Inception</td><td>Sci-Fi</td><td>8.8</td><td>2,400,000</td><td>2010</td></tr>
+        <tr><td>2</td><td>The Matrix</td><td>Sci-Fi</td><td>8.7</td><td>1,950,000</td><td>1999</td></tr>
+        <tr><td>3</td><td>Interstellar</td><td>Sci-Fi</td><td>8.7</td><td>1,900,000</td><td>2014</td></tr>
+    </tbody>
+</table>
+
+<h3>C. Top 3 Recommendations for Animation</h3>
+<table>
+    <thead><tr><th>Rank</th><th>Title</th><th>Genre</th><th>Rating</th><th>Votes</th><th>Year</th></tr></thead>
+    <tbody>
+        <tr><td>1</td><td>Spirited Away</td><td>Animation</td><td>8.6</td><td>790,000</td><td>2001</td></tr>
+        <tr><td>2</td><td>Spider-Man: Into the Spider-Verse</td><td>Animation</td><td>8.4</td><td>590,000</td><td>2018</td></tr>
+        <tr><td>3</td><td>Coco</td><td>Animation</td><td>8.4</td><td>530,000</td><td>2017</td></tr>
+    </tbody>
+</table>
+
+<h3>D. Program Execution Screenshot</h3>
+<div class="screenshot-container">
+    <img src="execution_screenshot.png" alt="Program Execution Screenshot" class="screenshot-img">
+    <p style="font-size: 13px; color: #64748b; margin-top: 8px;"><em>Figure 1: Program execution output in terminal showing all recommendation criteria.</em></p>
+</div>
+
+<h2 class="section-title">5. Conclusion & Learning Outcome</h2>
+<p>
+    <strong>Conclusion:</strong><br>
+    The project successfully demonstrates how a structured dataset can be processed using Python and Pandas to generate accurate, meaningful recommendations. By using both simple sorting and advanced weighted scoring, the system effectively meets real-world recommendation requirements.
+</p>
+<p>
+    <strong>Learning Outcomes:</strong><br>
+    • Mastered DataFrame loading, inspection, filtering, and sorting using Pandas.<br>
+    • Understood recommendation heuristics and trade-offs between pure rating vs. popularity-weighted rating.<br>
+    • Created clean code and documentation following university academic standards.
+</p>
+
+</body>
+</html>

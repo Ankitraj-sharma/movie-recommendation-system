@@ -1,0 +1,16 @@
+Movie_ID,Title,Genre,Rating,Votes,Release_Year
+1,Inception,Sci-Fi,8.8,2400000,2010
+2,The Dark Knight,Action,9.0,2700000,2008
+3,Interstellar,Sci-Fi,8.7,1900000,2014
+4,Parasite,Drama,8.5,850000,2019
+5,Spirited Away,Animation,8.6,790000,2001
+6,Avengers: Endgame,Action,8.4,1180000,2019
+7,The Shawshank Redemption,Drama,9.3,2750000,1994
+8,Whiplash,Drama,8.5,900000,2014
+9,Spider-Man: Into the Spider-Verse,Animation,8.4,590000,2018
+10,The Matrix,Sci-Fi,8.7,1950000,1999
+11,Gladiator,Action,8.5,1530000,2000
+12,Coco,Animation,8.4,530000,2017
+13,Forrest Gump,Drama,8.8,2100000,1994
+14,Dune: Part Two,Sci-Fi,8.6,420000,2024
+15,La La Land,Romance,8.0,600000,2016
